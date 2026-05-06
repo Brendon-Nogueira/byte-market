@@ -67,4 +67,4 @@ export class JsonProductRepository implements ProductRepository {
   }
 }
 
-export const productRepository = new JsonProductRepository();
+export const productRepository: ProductRepository = new JsonProductRepository();
