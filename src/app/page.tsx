@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <Container className="py-12">
-      <h4 className="text-3xl font-heading font-bold text-slate-200 mb-10 text-center md:text-left">
+      <h4 className="text-3xl font-heading font-bold text-foreground mb-10 text-center md:text-left">
         Nossos Produtos
       </h4>
 

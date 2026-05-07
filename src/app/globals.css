@@ -1,42 +1,47 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Premium Color Palette */
   --color-primary: #0f172a; /* Deep Navy */
   --color-secondary: #3b82f6; /* Electric Blue */
   --color-accent: #10b981; /* Emerald Accent */
-  --color-background: #f8fafc;
-  --color-foreground: #0f172a;
-  --color-card: #ffffff;
-  --color-muted: #64748b;
-
-  /* Glassmorphism support */
-  --background-glass: rgba(255, 255, 255, 0.7);
-  --border-glass: rgba(255, 255, 255, 0.3);
+  
+  /* Mapeando as variáveis dinâmicas para o tema */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
 
   /* Typography */
   --font-heading: "Outfit", sans-serif;
   --font-body: "Inter", sans-serif;
 }
 
+/* Configuração de Cores - Tema Claro (Padrão) */
 :root {
-  --background: var(--color-background);
-  --foreground: var(--color-foreground);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --muted: #64748b;
+  --background-glass: rgba(255, 255, 255, 0.7);
+  --border-glass: rgba(255, 255, 255, 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #020617;
-    --color-foreground: #f8fafc;
-    --color-card: #0f172a;
-    --background-glass: rgba(15, 23, 42, 0.7);
-    --border-glass: rgba(255, 255, 255, 0.1);
-  }
+/* Configuração de Cores - Tema Escuro */
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --card: #0f172a;
+  --muted: #94a3b8;
+  --background-glass: rgba(15, 23, 42, 0.7);
+  --border-glass: rgba(255, 255, 255, 0.1);
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

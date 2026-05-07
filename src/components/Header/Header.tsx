@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "../Container/Container";
+import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
 export const Header = () => {
   return (
@@ -9,7 +10,7 @@ export const Header = () => {
           <div className="flex items-center gap-8">
             <Link
               href="/"
-              className="text-2xl font-heading font-bold text-light tracking-tight"
+              className="text-2xl font-heading font-bold text-foreground tracking-tight"
             >
               Byte<span className="text-secondary">Market</span>
             </Link>
@@ -44,6 +45,8 @@ export const Header = () => {
                 className="bg-transparent border-none outline-none w-40 lg:w-60"
               />
             </div>
+            
+            <ThemeToggle />
 
             <button className="p-2 rounded-full hover:bg-white/10 transition-colors relative">
               <svg

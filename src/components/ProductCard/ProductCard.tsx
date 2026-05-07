@@ -39,10 +39,10 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Informações do Produto */}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex flex-col gap-1">
-          <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+          <p className="text-muted text-xs font-semibold uppercase tracking-wider">
             {product.brand}
           </p>
-          <h3 className="text-lg font-heading font-bold text-slate-200 group-hover:text-secondary transition-colors line-clamp-1">
+          <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-secondary transition-colors line-clamp-1">
             <Link href={`/produto/${product.slug}`}>
               <span aria-hidden="true" className="absolute inset-0" />
               {product.name}
@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Preço e Ação */}
         <div className="mt-auto pt-5 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-slate-200">
+            <span className="text-2xl font-bold text-foreground">
               {formattedPrice}
             </span>
             {Number(product.storage) > 0 || product.stock > 0 ? (
