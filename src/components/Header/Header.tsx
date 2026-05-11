@@ -17,19 +17,19 @@ export const Header = () => {
 
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted">
               <Link
-                href="/produtos"
+                href="/products"
                 className="hover:text-secondary transition-colors"
               >
                 Produtos
               </Link>
               <Link
-                href="/categorias"
+                href="/categories"
                 className="hover:text-secondary transition-colors"
               >
                 Categorias
               </Link>
               <Link
-                href="/ofertas"
+                href="/offers"
                 className="hover:text-secondary transition-colors"
               >
                 Ofertas
@@ -45,7 +45,7 @@ export const Header = () => {
                 className="bg-transparent border-none outline-none w-40 lg:w-60"
               />
             </div>
-            
+
             <ThemeToggle />
 
             <button className="p-2 rounded-full hover:bg-white/10 transition-colors relative">

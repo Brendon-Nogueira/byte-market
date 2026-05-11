@@ -43,7 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.brand}
           </p>
           <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-secondary transition-colors line-clamp-1">
-            <Link href={`/produto/${product.slug}`}>
+            <Link href={`/product/${product.slug}`}>
               <span aria-hidden="true" className="absolute inset-0" />
               {product.name}
             </Link>

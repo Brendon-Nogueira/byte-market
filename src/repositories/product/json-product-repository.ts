@@ -35,11 +35,24 @@ export class JsonProductRepository implements ProductRepository {
     return await this.readFromDisk();
   }
 
-  async getById(id: number): Promise<ProductModel> {
+  async getById(id: number | string): Promise<ProductModel | null> {
     const products = await this.readFromDisk();
-    const product = products.find((p) => p.id === id);
-    if (!product) throw new Error("Produto não encontrado");
-    return product;
+    const numericId = typeof id === "string" ? parseInt(id) : id;
+    const product = products.find((p) => p.id === numericId);
+    return product || null;
+  }
+
+  async getBySlug(slug: string): Promise<ProductModel | null> {
+    const products = await this.readFromDisk();
+    const product = products.find((p) => p.slug === slug);
+    return product || null;
+  }
+
+  async getByCategory(category: string): Promise<ProductModel[]> {
+    const products = await this.readFromDisk();
+    return products.filter(
+      (p) => p.category.toLowerCase() === category.toLowerCase()
+    );
   }
 
   async create(product: ProductModel): Promise<ProductModel> {
@@ -60,9 +73,10 @@ export class JsonProductRepository implements ProductRepository {
     return products[index];
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number | string): Promise<void> {
     const products = await this.readFromDisk();
-    const filteredProducts = products.filter((p) => p.id !== id);
+    const numericId = typeof id === "string" ? parseInt(id) : id;
+    const filteredProducts = products.filter((p) => p.id !== numericId);
     await this.writeToDisk(filteredProducts);
   }
 }

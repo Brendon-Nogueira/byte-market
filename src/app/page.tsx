@@ -3,12 +3,15 @@ import { Container } from "@/components/Container/Container";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import { productRepository } from "@/repositories/product/json-product-repository";
 import { Suspense } from "react";
+import { Hero } from "@/components/Hero/Hero";
 
 export default async function Home() {
   const products = await productRepository.getAll();
 
   return (
-    <Container className="py-12">
+    <>
+      <Hero />
+      <Container className="py-12">
       <h4 className="text-3xl font-heading font-bold text-foreground mb-10 text-center md:text-left">
         Nossos Produtos
       </h4>
@@ -20,6 +23,7 @@ export default async function Home() {
           ))}
         </div>
       </Suspense>
-    </Container>
+      </Container>
+    </>
   );
 }
