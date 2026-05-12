@@ -3,12 +3,14 @@
 import { ProductModel } from "@/models/product/product-model";
 import Link from "next/link";
 import { useState } from "react";
+import { useCart } from "@/hooks/use-cart";
 
 interface ProductCardProps {
   product: ProductModel;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
   const [imageError, setImageError] = useState(false);
 
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
@@ -71,7 +73,10 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
 
-          <button className="z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-secondary transition-colors duration-300">
+          <button
+            onClick={() => addToCart(product)}
+            className="z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-secondary transition-colors duration-300"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
