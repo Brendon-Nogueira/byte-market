@@ -51,8 +51,20 @@ export class JsonProductRepository implements ProductRepository {
   async getByCategory(category: string): Promise<ProductModel[]> {
     const products = await this.readFromDisk();
     return products.filter(
-      (p) => p.category.toLowerCase() === category.toLowerCase()
+      (p) => p.category.toLowerCase() === category.toLowerCase(),
     );
+  }
+
+  async getCategories(): Promise<string[]> {
+    const products = await this.readFromDisk();
+    const categories = products.map((p) => p.category);
+    return Array.from(new Set(categories)); // Remove duplicatas
+  }
+
+  async getOffers(): Promise<ProductModel[]> {
+    const products = await this.readFromDisk();
+    // retorna as ofertas abaixo de 1500
+    return products.filter((p) => p.price < 1500);
   }
 
   async create(product: ProductModel): Promise<ProductModel> {

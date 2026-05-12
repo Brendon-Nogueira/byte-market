@@ -5,15 +5,15 @@ import { Suspense } from "react";
 import { BgLoader } from "@/components/BgLoader/BgLoader";
 
 interface CategoryPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ category: string }>;
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { slug } = await params;
+  const { category } = await params;
 
-  const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
 
-  const products = await productRepository.getByCategory(slug);
+  const products = await productRepository.getByCategory(category);
 
   return (
     <Container className="py-12">

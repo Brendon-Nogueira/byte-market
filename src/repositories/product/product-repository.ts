@@ -6,6 +6,8 @@ export interface IReadProductRepository {
   getById(id: number | string): Promise<ProductModel | null>;
   getBySlug(slug: string): Promise<ProductModel | null>;
   getByCategory(category: string): Promise<ProductModel[]>;
+  getCategories(): Promise<string[]>;
+  getOffers(): Promise<ProductModel[]>;
 }
 
 export interface IWriteProductRepository {
