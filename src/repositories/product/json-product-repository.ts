@@ -67,6 +67,18 @@ export class JsonProductRepository implements ProductRepository {
     return products.filter((p) => p.price < 1500);
   }
 
+  async search(query: string): Promise<ProductModel[]> {
+    const products = await this.readFromDisk();
+    const searchLower = query.toLowerCase();
+
+    return products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(searchLower) ||
+        p.description.toLowerCase().includes(searchLower) ||
+        p.brand.toLowerCase().includes(searchLower)
+    );
+  }
+
   async create(product: ProductModel): Promise<ProductModel> {
     const products = await this.readFromDisk();
     const newProduct = { ...product, id: products.length + 1 };

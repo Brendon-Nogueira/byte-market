@@ -8,6 +8,7 @@ export interface IReadProductRepository {
   getByCategory(category: string): Promise<ProductModel[]>;
   getCategories(): Promise<string[]>;
   getOffers(): Promise<ProductModel[]>;
+  search(query: string): Promise<ProductModel[]>;
 }
 
 export interface IWriteProductRepository {
