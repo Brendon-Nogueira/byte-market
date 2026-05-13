@@ -8,7 +8,6 @@ export const SearchInput = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Pegamos o valor inicial da URL, se existir (ex: /search?q=fone)
   const [query, setQuery] = useState(searchParams.get("q") || "");
 
   const handleSearch = (e: React.FormEvent) => {
