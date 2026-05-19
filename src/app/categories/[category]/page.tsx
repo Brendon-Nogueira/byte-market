@@ -4,28 +4,40 @@ import { productRepository } from "@/repositories/product/json-product-repositor
 import { Suspense } from "react";
 import { BgLoader } from "@/components/BgLoader/BgLoader";
 
+import { SortSelector } from "@/components/ProductFilters/SortSelector";
+import { ProductFilterOptions } from "@/models/product/product-filter-model";
+
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
+  searchParams: Promise<ProductFilterOptions>;
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: CategoryPageProps) {
   const { category } = await params;
+  const options = await searchParams;
 
   const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
 
-  const products = await productRepository.getByCategory(category);
+  const products = await productRepository.getByCategory(category, options);
 
   return (
     <Container className="py-12">
-      <div className="mb-10 space-y-2 text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground capitalize">
-          {categoryName}
-        </h1>
-        <p className="text-muted">
-          Mostrando {products.length}{" "}
-          {products.length === 1 ? "produto" : "produtos"} encontrados nesta
-          categoria
-        </p>
+      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-2 text-center md:text-left">
+          <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground capitalize">
+            {categoryName}
+          </h1>
+          <p className="text-muted">
+            Mostrando {products.length}{" "}
+            {products.length === 1 ? "produto" : "produtos"} encontrados nesta
+            categoria
+          </p>
+        </div>
+
+        <SortSelector />
       </div>
 
       <Suspense fallback={<BgLoader />}>
