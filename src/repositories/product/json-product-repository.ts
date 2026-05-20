@@ -6,17 +6,26 @@ import path from "path";
 
 const filePath = path.join(process.cwd(), "src", "db", "seed", "products.json");
 
+interface RawProduct extends Omit<ProductModel, "created_at" | "updated_at" | "storage" | "stock"> {
+  createdAt?: string;
+  created_at?: string;
+  updatedAt?: string;
+  updated_at?: string;
+  storage?: string | number;
+  stock?: number;
+}
+
 export class JsonProductRepository implements ProductRepository {
   private async readFromDisk(): Promise<ProductModel[]> {
     try {
       const data = await fs.readFile(filePath, "utf-8");
       const json = JSON.parse(data);
 
-      // O JSON tem uma propriedade "products" que é o array
-      return json.products.map((p: any) => ({
+      
+      return json.products.map((p: RawProduct) => ({
         ...p,
-        created_at: new Date(p.createdAt || p.created_at),
-        updated_at: new Date(p.updatedAt || p.updated_at),
+        created_at: new Date(p.createdAt || p.created_at || ""),
+        updated_at: new Date(p.updatedAt || p.updated_at || ""),
 
         storage: String(p.storage || ""),
         stock: Number(p.stock || 0),

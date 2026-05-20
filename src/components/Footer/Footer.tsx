@@ -24,7 +24,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-slate-400 text-sm">
               <li>
                 <Link
-                  href="/produtos"
+                  href="/products"
                   className="hover:text-white transition-colors"
                 >
                   Todos os Produtos
@@ -32,7 +32,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/categorias"
+                  href="/categories"
                   className="hover:text-white transition-colors"
                 >
                   Categorias
@@ -40,7 +40,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/ofertas"
+                  href="/offers"
                   className="hover:text-white transition-colors"
                 >
                   Ofertas

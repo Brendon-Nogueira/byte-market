@@ -6,20 +6,31 @@ import { ProductModel } from "../models/product/product-model";
 import { CartContext } from "../contexts/cart-context";
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const [items, setItems] = useState<CartItemModel[]>([]);
 
   // Carrega o carrinho do localStorage ao iniciar
   useEffect(() => {
-    const savedCart = localStorage.getItem("byte-market-cart");
-    if (savedCart) {
-      setItems(JSON.parse(savedCart));
-    }
+    const loadCart = () => {
+      const savedCart = localStorage.getItem("byte-market-cart");
+
+      if (savedCart) {
+        setItems(JSON.parse(savedCart));
+      }
+
+      setIsMounted(true);
+    };
+
+    // Evita erro de set-state-in-effect no react-hooks
+    Promise.resolve().then(loadCart);
   }, []);
 
-  // Salva no localStorage sempre que o carrinho mudar
+  // Salva no localStorage sempre que o carrinho mudar & se componente já estiver montado
   useEffect(() => {
-    localStorage.setItem("byte-market-cart", JSON.stringify(items));
-  }, [items]);
+    if(isMounted){
+      localStorage.setItem("byte-market-cart", JSON.stringify(items));
+    }
+  }, [items, isMounted]);
 
   const addToCart = (product: ProductModel) => {
     setItems((prevItems) => {
@@ -76,6 +87,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         clearCart,
         totalItems,
         totalPrice,
+        isMounted
       }}
     >
       {children}

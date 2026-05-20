@@ -4,7 +4,7 @@ import { useCart } from "@/hooks/use-cart";
 import Link from "next/link";
 
 export const CartButton = () => {
-  const { totalItems } = useCart();
+  const { totalItems, isMounted } = useCart();
 
   return (
     <Link 
@@ -27,11 +27,12 @@ export const CartButton = () => {
         <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
       </svg>
       
-      {totalItems > 0 && (
-        <span className="absolute top-0 right-0 bg-secondary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in duration-300">
-          {totalItems}
-        </span>
-      )}
+      {/* Evita o efeito de "piscar" no carregamento */}
+      {isMounted && totalItems > 0 && (
+         <span className="absolute top-0 right-0 bg-secondary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in duration-300">
+           {totalItems}
+         </span>
+       )}
     </Link>
   );
 };

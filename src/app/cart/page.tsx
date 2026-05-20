@@ -6,13 +6,34 @@ import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 
 export default function CartPage() {
-  const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems } = useCart();
+  // const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems } = useCart();
+  const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems, isMounted } = useCart();
 
   const formattedPrice = (price: number) =>
     new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL",
     }).format(price);
+
+    if (!isMounted) {
+    return (
+      <Container className="py-12">
+        <div className="h-10 w-48 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse mb-10" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-6">
+           {[1, 2].map((i) => (
+             <div 
+                key={i} 
+               className="h-36 rounded-3xl bg-card border border-white/10 glass animate-pulse"
+              />
+           ))}
+         </div>
+         <div className="h-64 rounded-3xl bg-card border border-white/10 glass animate-pulse" />
+        </div>
+      </Container>
+    );
+  }
+
 
   if (items.length === 0) {
     return (
