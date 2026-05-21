@@ -101,8 +101,7 @@ export const Footer = () => {
 
         <div className="border-t border-slate-800 mt-12 pt-8 text-center text-slate-500 text-xs">
           <p>
-            &copy; {new Date().getFullYear()} ByteMarket. Todos os direitos
-            reservados.
+            Copyright &copy; {new Date().getFullYear()} <Link href="/" className="hover:text-secondary transition-colors">ByteMarket.</Link> Todos os direitos reservados.
           </p>
         </div>
       </Container>

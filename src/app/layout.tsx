@@ -5,6 +5,7 @@ import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { CartProvider } from "@/providers/cart-provider";
+import { ToastProvider } from "@/providers/toast-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,12 +27,8 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
-  return (
-    <html
-      lang="pt-BR"
-      className={`${inter.variable} ${outfit.variable}`}
-      suppressHydrationWarning
-    >
+return (
+    <html lang="pt-BR" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col font-body bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
@@ -39,11 +36,14 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            <Header />
-            <main className="grow">{children}</main>
-            <Footer />
-          </CartProvider>
+         
+          <ToastProvider>
+            <CartProvider>
+              <Header />
+              <main className="grow">{children}</main>
+              <Footer />
+            </CartProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
