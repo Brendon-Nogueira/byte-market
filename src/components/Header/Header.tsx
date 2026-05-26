@@ -3,6 +3,7 @@ import { Container } from "../Container/Container";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import { SearchInput } from "./SearchInput";
 import { CartButton } from "./CartButton";
+import { WishlistButton } from "./WishlistButton";
 
 export const Header = () => {
   return (
@@ -43,6 +44,8 @@ export const Header = () => {
             <SearchInput />
 
             <ThemeToggle />
+
+            <WishlistButton />
 
             <CartButton />
 

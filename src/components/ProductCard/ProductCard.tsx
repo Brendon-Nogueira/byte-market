@@ -4,6 +4,9 @@ import { ProductModel } from "@/models/product/product-model";
 import Link from "next/link";
 import { useState } from "react";
 import { AddToCartButton } from "../AddToCartButton/AddToCartButton";
+import { useWishlist } from "@/contexts/wishlist-context";
+import { Heart } from "lucide-react";
+
 
 interface ProductCardProps {
   product: ProductModel;
@@ -11,6 +14,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
+  const { has, toggle } = useWishlist();
+  const isFavorite = has(product.id);
 
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -29,6 +34,24 @@ export function ProductCard({ product }: ProductCardProps) {
           onError={() => setImageError(true)}
           className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
         />
+        {/* Botão de Favorito (Heart) */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product);
+          }}
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white hover:text-red-500 backdrop-blur-md transition-all duration-300 active:scale-90"
+          title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+        >
+          <Heart
+            size={18}
+            className={`transition-all duration-300 ${
+              isFavorite ? "fill-red-500 text-red-500 scale-110" : ""
+            }`}
+          />
+        </button>
+
         {/* Badge de Categoria */}
         <div className="absolute top-4 left-4">
           <span className="inline-flex items-center rounded-full bg-primary/80 px-2.5 py-0.5 text-xs font-medium text-white backdrop-blur-md">

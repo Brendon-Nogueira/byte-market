@@ -10,4 +10,6 @@ export interface CartContextType {
   totalItems: number;
   totalPrice: number;
   isMounted: boolean;
+  isDrawerOpen: boolean;
+  setDrawerOpen: (open: boolean) => void;
 }

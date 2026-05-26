@@ -5,6 +5,8 @@ import { useCart } from "@/hooks/use-cart";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 
+
+
 export default function CartPage() {
   // const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems } = useCart();
   const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems, isMounted } = useCart();

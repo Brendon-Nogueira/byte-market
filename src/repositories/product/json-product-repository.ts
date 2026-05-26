@@ -139,6 +139,12 @@ export class JsonProductRepository implements ProductRepository {
       );
     }
 
+    if (options.category) {
+      filtered = filtered.filter(
+        (p) => p.category.toLowerCase() === options.category?.toLowerCase(),
+      );
+    }
+
     if (options.minPrice !== undefined) {
       filtered = filtered.filter((p) => p.price >= (options.minPrice ?? 0));
     }

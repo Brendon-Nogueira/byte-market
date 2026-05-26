@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [items, setItems] = useState<CartItemModel[]>([]);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
   const { toast } = useToast();
 
   // Carrega o carrinho do localStorage ao iniciar
@@ -51,6 +52,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return [...prevItems, { ...product, quantity: 1 }];
     });
     toast('Item adicionado ao carrinho', 'success');
+    setDrawerOpen(true);
   };
 
   const decreaseQuantity = (productId: number) => {
@@ -68,17 +70,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       // Se a quantidade for 1 ou menor, remove o item
       return prevItems.filter((item) => item.id !== productId);
     });
-
-    
   };
 
   const removeFromCart = (productId: number) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== productId));
-
     toast('Item removido do carrinho', 'info');
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => {
+    setItems([]);
+    toast('Carrinho limpo', 'info');
+  };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
@@ -96,7 +98,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         clearCart,
         totalItems,
         totalPrice,
-        isMounted
+        isMounted,
+        isDrawerOpen,
+        setDrawerOpen
       }}
     >
       {children}

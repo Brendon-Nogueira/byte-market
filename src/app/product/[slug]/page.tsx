@@ -6,6 +6,10 @@ import Link from "next/link";
 import { AddToCartButton } from "@/components/AddToCartButton/AddToCartButton";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 
+
+
+import { ProductPageWishlistButton } from "@/components/ProductPageWishlistButton/ProductPageWishlistButton";
+
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -98,7 +102,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="h-px bg-white/10 w-full" />
 
           {/* Seção de Compra Reativa */}
-          <AddToCartButton product={product} />
+          <div className="flex gap-4 items-center">
+            <AddToCartButton product={product} />
+            <ProductPageWishlistButton product={product} />
+          </div>
 
           {/* Info de Entrega e Garantia */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

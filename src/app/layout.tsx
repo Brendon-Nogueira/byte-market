@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer/Footer";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { CartProvider } from "@/providers/cart-provider";
 import { ToastProvider } from "@/providers/toast-provider";
+import { WishlistProvider } from "@/contexts/wishlist-context";
+import { CartDrawer } from "@/components/CartDrawer/CartDrawer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,13 +38,15 @@ return (
           enableSystem
           disableTransitionOnChange
         >
-         
           <ToastProvider>
-            <CartProvider>
-              <Header />
-              <main className="grow">{children}</main>
-              <Footer />
-            </CartProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <Header />
+                <CartDrawer />
+                <main className="grow">{children}</main>
+                <Footer />
+              </CartProvider>
+            </WishlistProvider>
           </ToastProvider>
         </ThemeProvider>
       </body>

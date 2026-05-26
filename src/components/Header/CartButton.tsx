@@ -1,15 +1,16 @@
 "use client";
 
 import { useCart } from "@/hooks/use-cart";
-import Link from "next/link";
+
 
 export const CartButton = () => {
-  const { totalItems, isMounted } = useCart();
+  const { totalItems, isMounted, setDrawerOpen } = useCart();
 
   return (
-    <Link 
-      href="/cart"
+    <button 
+      onClick={() => setDrawerOpen(true)}
       className="p-2 rounded-full hover:bg-white/10 transition-colors relative"
+      aria-label="Ver Carrinho"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -33,6 +34,6 @@ export const CartButton = () => {
            {totalItems}
          </span>
        )}
-    </Link>
+    </button>
   );
 };

@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Container } from "../Container/Container";
 import { ArrowRight, Zap } from "lucide-react";
+
 
 export const Hero = () => {
   return (
@@ -34,16 +36,22 @@ export const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-8 py-4 bg-secondary hover:bg-blue-600 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 group active:scale-95">
+            <Link
+              href="/offers"
+              className="px-8 py-4 bg-secondary hover:bg-blue-600 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 group active:scale-95"
+            >
               Ver Ofertas
               <ArrowRight
                 size={20}
                 className="group-hover:translate-x-1 transition-transform"
               />
-            </button>
-            <button className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 backdrop-blur-md transition-all active:scale-95">
-              Novidades
-            </button>
+            </Link>
+            <Link
+              href="/products"
+              className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 backdrop-blur-md transition-all active:scale-95"
+            >
+              Ver Todos os Produtos
+            </Link>
           </div>
         </div>
       </Container>
