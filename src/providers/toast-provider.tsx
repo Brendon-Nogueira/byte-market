@@ -31,8 +31,8 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      {/* mensagens renderizadas no canto superior direito */}
-      <div className="fixed top-24 right-6 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full sm:w-80">
+      {/* mensagens renderizadas no centro superior */}
+      <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full sm:w-80">
         {toasts.map((t) => (
           <Toast
             key={t.id}

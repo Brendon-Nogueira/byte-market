@@ -16,7 +16,11 @@ async function test() {
     if (allProducts.length > 0) {
       const idToSearch = allProducts[0].id;
       const product = await productRepository.getById(idToSearch);
-      console.log(`Busca por ID (${idToSearch}) funcionando:`, product.name);
+      if (product) {
+        console.log(`Busca por ID (${idToSearch}) funcionando:`, product.name);
+      } else {
+        console.log(`Busca por ID (${idToSearch}): Produto não encontrado.`);
+      }
     }
   } catch (error) {
     console.error("Erro no teste:", error);

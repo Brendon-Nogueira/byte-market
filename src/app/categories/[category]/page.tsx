@@ -37,7 +37,9 @@ export default async function CategoryPage({
           </p>
         </div>
 
-        <SortSelector />
+        <Suspense fallback={null}>
+          <SortSelector />
+        </Suspense>
       </div>
 
       <Suspense fallback={<BgLoader />}>

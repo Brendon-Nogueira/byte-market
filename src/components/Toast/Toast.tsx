@@ -43,8 +43,8 @@ export const Toast = ({ message, type = "success", onClose }: ToastProps) => {
     <div
       className={`pointer-events-auto flex items-center justify-between gap-3 px-4 py-3 rounded-2xl border glass shadow-2xl transition-all duration-300 transform ${
         isAnimating
-          ? "translate-x-0 opacity-100 scale-100"
-          : "translate-x-10 opacity-0 scale-95"
+          ? "translate-y-0 opacity-100 scale-100"
+          : "-translate-y-2 opacity-0 scale-95"
       } ${bgStyles[type]}`}
       role="alert"
     >

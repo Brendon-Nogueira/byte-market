@@ -4,6 +4,7 @@ import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import { SearchInput } from "./SearchInput";
 import { CartButton } from "./CartButton";
 import { WishlistButton } from "./WishlistButton";
+import { Suspense } from "react";
 
 export const Header = () => {
   return (
@@ -41,7 +42,9 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <SearchInput />
+            <Suspense fallback={null}>
+              <SearchInput />
+            </Suspense>
 
             <ThemeToggle />
 

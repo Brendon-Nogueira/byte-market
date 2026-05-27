@@ -40,16 +40,20 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </p>
         </div>
 
-        <SortSelector />
+        <Suspense fallback={null}>
+          <SortSelector />
+        </Suspense>
       </div>
 
       {/* Body: sidebar + grid */}
       <div className="flex flex-col lg:flex-row gap-8 items-start">
-        <FilterSidebar
-          brands={brands}
-          categories={categories}
-          maxProductPrice={maxProductPrice}
-        />
+        <Suspense fallback={null}>
+          <FilterSidebar
+            brands={brands}
+            categories={categories}
+            maxProductPrice={maxProductPrice}
+          />
+        </Suspense>
 
         <div className="flex-1 min-w-0">
           {/* Contagem de resultados */}
