@@ -8,12 +8,13 @@ import { useWishlist } from "@/contexts/wishlist-context";
 import { Heart } from "lucide-react";
 
 
+import { ProductImage } from "../ProductImage/ProductImage";
+
 interface ProductCardProps {
   product: ProductModel;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const [imageError, setImageError] = useState(false);
   const { has, toggle } = useWishlist();
   const isFavorite = has(product.id);
 
@@ -22,16 +23,14 @@ export function ProductCard({ product }: ProductCardProps) {
     currency: "BRL",
   }).format(product.price);
 
-  const fallbackImage = `https://picsum.photos/800/800`;
-
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-card border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 glass">
       {/* Imagem do Produto */}
       <div className="relative aspect-square overflow-hidden bg-slate-100">
-        <img
-          src={imageError ? fallbackImage : product.image}
+        <ProductImage
+          src={product.image}
           alt={product.name}
-          onError={() => setImageError(true)}
+          category={product.category}
           className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
         />
         {/* Botão de Favorito (Heart) */}

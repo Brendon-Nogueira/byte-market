@@ -4,6 +4,7 @@ import { Container } from "@/components/Container/Container";
 import { useCart } from "@/hooks/use-cart";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
+import { ProductImage } from "@/components/ProductImage/ProductImage";
 
 
 
@@ -73,9 +74,10 @@ export default function CartPage() {
               key={item.id} 
               className="flex flex-col sm:flex-row items-center gap-6 p-6 rounded-3xl bg-card border border-white/10 glass"
             >
-              <img 
+              <ProductImage 
                 src={item.image} 
                 alt={item.name} 
+                category={item.category}
                 className="w-24 h-24 object-cover rounded-2xl bg-muted"
               />
               

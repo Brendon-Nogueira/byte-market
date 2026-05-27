@@ -5,6 +5,7 @@ import { ShieldCheck, Truck, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { AddToCartButton } from "@/components/AddToCartButton/AddToCartButton";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
+import { ProductImage } from "@/components/ProductImage/ProductImage";
 
 
 
@@ -60,9 +61,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         {/* Coluna da Imagem */}
         <div className="relative aspect-square rounded-3xl overflow-hidden bg-card border border-white/10 shadow-2xl glass group">
-          <img
+          <ProductImage
             src={product.image}
             alt={product.name}
+            category={product.category}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute top-6 left-6">

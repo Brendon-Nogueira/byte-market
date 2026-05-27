@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useCart } from "@/hooks/use-cart";
 import { X, Plus, Minus, Trash2, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { ProductImage } from "../ProductImage/ProductImage";
 
 
 export const CartDrawer = () => {
@@ -108,9 +109,10 @@ export const CartDrawer = () => {
                 >
                   {/* Imagem do produto */}
                   <div className="relative w-20 h-20 bg-slate-100 rounded-xl overflow-hidden shrink-0">
-                    <img
-                      src={item.image || "https://picsum.photos/200/200"}
+                    <ProductImage
+                      src={item.image}
                       alt={item.name}
+                      category={item.category}
                       className="w-full h-full object-cover"
                     />
                   </div>
