@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Laptop,
   Smartphone,
@@ -19,6 +19,16 @@ import {
   Package,
 } from "lucide-react";
 
+// Cache em escopo global
+let isUnsplashBlockedGlobal = false;
+
+// Tenta carregar do sessionStorage
+if (typeof window !== "undefined") {
+  try {
+    isUnsplashBlockedGlobal = sessionStorage.getItem("unsplash_blocked") === "true";
+  } catch (e) {}
+}
+
 interface ProductImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
@@ -33,10 +43,47 @@ export function ProductImage({
   className,
   ...props
 }: ProductImageProps) {
-  const [imageError, setImageError] = useState(false);
+  const isUnsplashUrl = src?.includes("unsplash.com");
+  const [imageError, setImageError] = useState(
+    !src || (isUnsplashUrl && isUnsplashBlockedGlobal)
+  );
+
+  // verifica se ouve falha nas imagens do unsplash e atualiza o card em tempo real
+  useEffect(() => {
+    if (!isUnsplashUrl || imageError) return;
+
+    //se houve falha antes do mount, força o erro 
+    if (isUnsplashBlockedGlobal) {
+      setImageError(true);
+      return;
+    }
+
+    const handleBlocked = () => {
+      setImageError(true);
+    };
+
+    window.addEventListener("unsplash-blocked", handleBlocked);
+    return () => {
+      window.removeEventListener("unsplash-blocked", handleBlocked);
+    };
+  }, [isUnsplashUrl, imageError]);
+
+  const handleError = () => {
+    setImageError(true);
+
+    
+    if (isUnsplashUrl && !isUnsplashBlockedGlobal) {
+      isUnsplashBlockedGlobal = true;
+      try {
+        sessionStorage.setItem("unsplash_blocked", "true");
+      } catch (e) {}
+      // dispatch
+      window.dispatchEvent(new CustomEvent("unsplash-blocked"));
+    }
+  };
 
   if (imageError || !src) {
-    // Escolhe um ícone apropriado baseado na categoria
+    // icone com base na categoria
     const iconClass = "w-12 h-12 text-secondary/80 mb-2";
     const cat = category?.toLowerCase() || "";
 
@@ -113,7 +160,7 @@ export function ProductImage({
     <img
       src={src}
       alt={alt}
-      onError={() => setImageError(true)}
+      onError={handleError}
       className={className}
       {...props}
     />

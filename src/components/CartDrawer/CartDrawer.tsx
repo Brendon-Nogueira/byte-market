@@ -44,8 +44,10 @@ export const CartDrawer = () => {
     <>
       {/* Animação do Overlay / Backdrop */}
       <div
-        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-          isDrawerOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        data-test-id="cart-drawer"
+        aria-hidden={!isDrawerOpen}
+        className={`fixed top-0 right-0 … ${
+          isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         onClick={() => setDrawerOpen(false)}
       />
@@ -71,6 +73,7 @@ export const CartDrawer = () => {
           </div>
           <button
             onClick={() => setDrawerOpen(false)}
+            aria-label="Fechar carrinho"
             className="p-2 rounded-full hover:bg-white/10 text-muted hover:text-foreground transition-colors"
           >
             <X size={20} />

@@ -24,6 +24,7 @@ export const AddToCartButton = ({
           e.preventDefault();
           addToCart(product);
         }}
+        aria-label="Adicionar ao carrinho"
         className={`z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-secondary transition-all duration-300 active:scale-90 ${className}`}
       >
         <ShoppingCart size={18} />
