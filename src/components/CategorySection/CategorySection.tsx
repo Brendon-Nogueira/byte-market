@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "../Container/Container";
-import { productRepository } from "@/repositories/product/json-product-repository";
+import { productRepository } from "@/repositories/product";
 import {
   Monitor,
   Keyboard,

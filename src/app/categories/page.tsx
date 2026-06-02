@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container/Container";
-import { productRepository } from "@/repositories/product/json-product-repository";
+import { productRepository } from "@/repositories/product";
 import Link from "next/link";
 import { ChevronRight, Layers } from "lucide-react";
 

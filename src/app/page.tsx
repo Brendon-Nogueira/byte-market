@@ -1,6 +1,6 @@
 import { Container } from "@/components/Container/Container";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
-import { productRepository } from "@/repositories/product/json-product-repository";
+import { productRepository } from "@/repositories/product";
 import { Suspense } from "react";
 import { Hero } from "@/components/Hero/Hero";
 import { StatsBar } from "@/components/StatsBar/StatsBar";

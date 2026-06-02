@@ -13,4 +13,7 @@ export type ProductModel = {
   created_at: Date;
   updated_at: Date;
   isAvailable: boolean;
+  releaseDate: Date;
+  rating: number;
+  reviewCount: number;
 };

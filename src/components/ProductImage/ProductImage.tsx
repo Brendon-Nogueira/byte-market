@@ -44,19 +44,22 @@ export function ProductImage({
   ...props
 }: ProductImageProps) {
   const isUnsplashUrl = src?.includes("unsplash.com");
-  const [imageError, setImageError] = useState(
-    !src || (isUnsplashUrl && isUnsplashBlockedGlobal)
-  );
+  const [imageError, setImageError] = useState(!src);
 
   // verifica se ouve falha nas imagens do unsplash e atualiza o card em tempo real
   useEffect(() => {
-    if (!isUnsplashUrl || imageError) return;
-
-    //se houve falha antes do mount, força o erro 
-    if (isUnsplashBlockedGlobal) {
+    if (!src) {
       setImageError(true);
       return;
     }
+
+    // se houve falha antes do mount, força o erro
+    if (isUnsplashUrl && isUnsplashBlockedGlobal) {
+      setImageError(true);
+      return;
+    }
+
+    if (!isUnsplashUrl || imageError) return;
 
     const handleBlocked = () => {
       setImageError(true);
@@ -66,7 +69,7 @@ export function ProductImage({
     return () => {
       window.removeEventListener("unsplash-blocked", handleBlocked);
     };
-  }, [isUnsplashUrl, imageError]);
+  }, [src, isUnsplashUrl, imageError]);
 
   const handleError = () => {
     setImageError(true);

@@ -1,0 +1,20 @@
+CREATE TABLE "products" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"brand" varchar(255) NOT NULL,
+	"price" numeric(10, 2) NOT NULL,
+	"description" text NOT NULL,
+	"image" text NOT NULL,
+	"storage" varchar(50),
+	"stock" integer DEFAULT 0 NOT NULL,
+	"category" varchar(100) NOT NULL,
+	"slug" varchar(255) NOT NULL,
+	"color" varchar(100),
+	"release_date" varchar(100),
+	"is_available" boolean DEFAULT true NOT NULL,
+	"rating" double precision DEFAULT 0 NOT NULL,
+	"review_count" integer DEFAULT 0 NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "products_slug_unique" UNIQUE("slug")
+);

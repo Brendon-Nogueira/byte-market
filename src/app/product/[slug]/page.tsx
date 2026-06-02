@@ -1,4 +1,4 @@
-import { productRepository } from "@/repositories/product/json-product-repository";
+import { productRepository } from "@/repositories/product";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container/Container";
 import { ShieldCheck, Truck, ChevronRight } from "lucide-react";
