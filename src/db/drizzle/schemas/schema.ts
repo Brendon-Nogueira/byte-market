@@ -1,4 +1,3 @@
-import { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 import { pgTable, serial, varchar, text, decimal, integer, boolean, timestamp, doublePrecision } from 'drizzle-orm/pg-core';
 
 export const products = pgTable('products', {
@@ -27,3 +26,15 @@ export const products = pgTable('products', {
 
 export type ProductsTableSelectModel = typeof products.$inferSelect;
 export type ProductsTableInsertModel = typeof products.$inferInsert;
+
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type UserSelectModel = typeof users.$inferSelect;
+export type UserInsertModel = typeof users.$inferInsert;

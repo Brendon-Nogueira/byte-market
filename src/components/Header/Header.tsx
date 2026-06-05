@@ -5,8 +5,12 @@ import { SearchInput } from "./SearchInput";
 import { CartButton } from "./CartButton";
 import { WishlistButton } from "./WishlistButton";
 import { Suspense } from "react";
+import { getCurrentUser, logoutAction } from "@/lib/auth-actions";
+import { LogIn, LogOut, User } from "lucide-react";
 
-export const Header = () => {
+export const Header = async () => {
+  const user = await getCurrentUser();
+
   return (
     <header className="sticky top-0 z-50 w-full glass shadow-sm">
       <Container>
@@ -51,6 +55,37 @@ export const Header = () => {
             <WishlistButton />
 
             <CartButton />
+
+            {/* Seção de Autenticação */}
+            <div className="hidden sm:flex items-center gap-3 pl-2 border-l border-white/10">
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col text-right">
+                    <span className="text-xs text-muted">Olá,</span>
+                    <span className="text-sm font-semibold text-foreground max-w-[120px] truncate">
+                      {user.name.split(" ")[0]}
+                    </span>
+                  </div>
+                  <form action={logoutAction}>
+                    <button
+                      type="submit"
+                      title="Sair"
+                      className="p-2.5 rounded-xl bg-white/5 hover:bg-red-500/10 text-muted hover:text-red-400 border border-white/5 transition-all cursor-pointer active:scale-95"
+                    >
+                      <LogOut size={16} />
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-secondary hover:bg-blue-600 text-white text-sm font-bold transition-all shadow-md shadow-blue-500/10 active:scale-95"
+                >
+                  <LogIn size={16} />
+                  <span>Entrar</span>
+                </Link>
+              )}
+            </div>
 
             <button className="md:hidden p-2">
               <svg
