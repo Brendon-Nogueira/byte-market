@@ -2,15 +2,61 @@
 
 import { Container } from "@/components/Container/Container";
 import { useCart } from "@/hooks/use-cart";
-import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
+import { Trash2, Plus, Minus, ShoppingBag, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { ProductImage } from "@/components/ProductImage/ProductImage";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 
 
 export default function CartPage() {
   // const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems } = useCart();
-  const { items, addToCart, decreaseQuantity, removeFromCart, totalPrice, totalItems, isMounted } = useCart();
+  const { items, addToCart, decreaseQuantity, removeFromCart, clearCart, totalPrice, totalItems, isMounted } = useCart();
+  const router = useRouter();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const { toast } = useToast();
+
+  // função de checkout chama a API e em caso de sucesso limpa o carrinho
+  const handleCheckout = async () => {
+    if (isCheckingOut || items.length === 0) return;
+    setIsCheckingOut(true);
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+      
+        if (response.status === 401) {
+          router.push('/login?callbackUrl=/cart');
+          return;
+        }
+        toast(data.error || 'Erro ao finalizar a compra. Tente novamente.', 'error');
+        return;
+      }
+
+    
+      clearCart();
+      router.push('/orders');
+    } catch {
+      toast('Erro de conexão. Verifique sua internet e tente novamente.', 'error');
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   const formattedPrice = (price: number) =>
     new Intl.NumberFormat("pt-BR", {
@@ -136,8 +182,19 @@ export default function CartPage() {
               </div>
             </div>
 
-            <button className="w-full mt-8 py-4 bg-secondary text-white rounded-2xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-secondary/20">
-              Finalizar Compra
+            <button 
+              onClick={handleCheckout}
+              disabled={isCheckingOut}
+              className="w-full mt-8 py-4 bg-secondary text-white rounded-2xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-secondary/20 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+            >
+              {isCheckingOut ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Processando...
+                </>
+              ) : (
+                'Finalizar Compra'
+              )}
             </button>
             
             <Link 

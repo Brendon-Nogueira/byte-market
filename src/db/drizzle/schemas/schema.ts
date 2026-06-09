@@ -1,4 +1,5 @@
 import { pgTable, serial, varchar, text, decimal, integer, boolean, timestamp, doublePrecision } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 export const products = pgTable('products', {
   id: serial('id').primaryKey(),
@@ -38,3 +39,48 @@ export const users = pgTable('users', {
 
 export type UserSelectModel = typeof users.$inferSelect;
 export type UserInsertModel = typeof users.$inferInsert;
+
+
+export const orders = pgTable('orders', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  status: varchar('status', { length: 50 }).notNull().default('pending'),
+  // 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled'
+
+  total: decimal('total', { precision: 10, scale: 2 }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type OrderSelectModel = typeof orders.$inferSelect;
+export type OrderInsertModel = typeof orders.$inferInsert;
+
+
+
+export const orderItems = pgTable('order_items', {
+  id: serial('id').primaryKey(),
+  orderId: integer('order_id').notNull().references(() => orders.id, { onDelete: 'cascade' }),
+  productId: integer('product_id').notNull().references(() => products.id, { onDelete: 'restrict' }),
+  quantity: integer('quantity').notNull(),
+  
+  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+});
+
+export type OrderItemSelectModel = typeof orderItems.$inferSelect;
+export type OrderItemInsertModel = typeof orderItems.$inferInsert;
+
+
+
+export const usersRelations = relations(users, ({ many }) => ({
+  orders: many(orders),
+}));
+
+export const ordersRelations = relations(orders, ({ one, many }) => ({
+  user: one(users, { fields: [orders.userId], references: [users.id] }),
+  items: many(orderItems),
+}));
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, { fields: [orderItems.orderId], references: [orders.id] }),
+  product: one(products, { fields: [orderItems.productId], references: [products.id] }),
+}));

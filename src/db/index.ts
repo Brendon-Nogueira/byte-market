@@ -3,23 +3,28 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from './drizzle/schemas/schema';
 import dotenv from 'dotenv';
 
-// Carrega variáveis do arquivo .env 
+
 if (!process.env.DATABASE_URL) {
   dotenv.config();
 }
 
-export const connectionString = process.env.DATABASE_URL;
-
-
-if (!connectionString) {
+if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL variavel de ambiente não encontrada');
 }
-const sqlPath = neon(connectionString);
-const sql = sqlPath
+
+const sql = neon(process.env.DATABASE_URL);
+
+
 export const db = drizzle({
   client: sql,
-  schema : {
-    products: schema.products
-  }, 
-  //logger: true
+  schema: {
+    products: schema.products,
+    users: schema.users,
+    orders: schema.orders,
+    orderItems: schema.orderItems,
+    usersRelations: schema.usersRelations,
+    ordersRelations: schema.ordersRelations,
+    orderItemsRelations: schema.orderItemsRelations,
+  },
+  // logger: true
 });

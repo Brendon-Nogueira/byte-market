@@ -5,22 +5,25 @@ import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import { cookies } from "next/headers";
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || "bytemarket_secret_key_random_length_at_least_32_characters_long_921038"
-);
+// removi a fallback hardcoded para lançar uma exceção se o JWT_SECRET não estiver configurado.
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error('JWT_SECRET não está configurado nas variáveis de ambiente.');
+  return new TextEncoder().encode(secret);
+};
 
 // funcoes auxiliares jwt
 async function signJWT(payload: { id: number; name: string; email: string }) {
   return await new jose.SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("7d") 
-    .sign(JWT_SECRET);
+    .setExpirationTime("7d")
+    .sign(getJwtSecret());
 }
 
 export async function verifyJWT(token: string) {
   try {
-    const { payload } = await jose.jwtVerify(token, JWT_SECRET);
+    const { payload } = await jose.jwtVerify(token, getJwtSecret());
     return payload as { id: number; name: string; email: string };
   } catch {
     return null;
