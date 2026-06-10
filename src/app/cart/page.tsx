@@ -49,8 +49,9 @@ export default function CartPage() {
       }
 
     
+      // Sucesso: limpa carrinho e vai para o histórico no perfil
       clearCart();
-      router.push('/orders');
+      router.push('/profile');
     } catch {
       toast('Erro de conexão. Verifique sua internet e tente novamente.', 'error');
     } finally {

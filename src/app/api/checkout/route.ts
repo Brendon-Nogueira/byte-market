@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, error: 'Dados do carrinho inválidos.', details: error.errors },
+        { success: false, error: 'Dados do carrinho inválidos.', details: error.issues },
         { status: 400 },
       );
     }

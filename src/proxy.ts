@@ -24,11 +24,11 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // exige autenticação 
+  // Rotas que exigem autenticação
   const isProtectedRoute =
     pathname.startsWith("/wishlist") ||
     pathname.startsWith("/cart") ||
-    pathname.startsWith("/orders");
+    pathname.startsWith("/profile");
 
   
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
@@ -50,6 +50,6 @@ export async function proxy(request: NextRequest) {
 
 
 export const config = {
-  matcher: ["/wishlist/:path*", "/cart/:path*", "/orders/:path*", "/login", "/register"],
+  matcher: ["/wishlist/:path*", "/cart/:path*", "/profile/:path*", "/login", "/register"],
 };
 

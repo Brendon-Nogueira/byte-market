@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useTransition, useState } from "react";
 import { loginAction } from "@/lib/auth-actions";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,7 +8,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container/Container";
 import { Eye, EyeOff, Loader2, LogIn } from "lucide-react";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
@@ -122,5 +123,17 @@ export default function LoginPage() {
         </div>
       </div>
     </Container>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <Container className="py-20 flex justify-center items-center min-h-[80vh]">
+        <Loader2 className="animate-spin text-secondary" size={32} />
+      </Container>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

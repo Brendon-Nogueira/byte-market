@@ -60,12 +60,12 @@ export const Header = async () => {
             <div className="hidden sm:flex items-center gap-3 pl-2 border-l border-white/10">
               {user ? (
                 <div className="flex items-center gap-3">
-                  <div className="flex flex-col text-right">
+                  <Link href="/profile" className="flex flex-col text-right hover:opacity-80 transition-opacity">
                     <span className="text-xs text-muted">Olá,</span>
-                    <span className="text-sm font-semibold text-foreground max-w-[120px] truncate">
+                    <span className="text-sm font-semibold text-secondary max-w-[120px] truncate hover:underline">
                       {user.name.split(" ")[0]}
                     </span>
-                  </div>
+                  </Link>
                   <form action={logoutAction}>
                     <button
                       type="submit"
